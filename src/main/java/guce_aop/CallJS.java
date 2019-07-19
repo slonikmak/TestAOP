@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
  * @autor slonikmak on 19.07.2019.
  */
 @Retention(RetentionPolicy.RUNTIME) @Target(ElementType.METHOD)
-public @interface NotOnWeekends {
-    String value();
+public @interface CallJS {
+    String methodName();
 }

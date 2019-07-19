@@ -1,5 +1,6 @@
 package guce_aop;
 
+import com.google.inject.Inject;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -10,7 +11,10 @@ import java.util.stream.Stream;
 /**
  * @autor slonikmak on 19.07.2019.
  */
-public class WeekendBlocker implements MethodInterceptor {
+public class JSCaller implements MethodInterceptor {
+
+    @Inject
+    JsBridgeTestObj bridgeTestObj;
 
 
     @Override
@@ -25,8 +29,10 @@ public class WeekendBlocker implements MethodInterceptor {
             }
         });
 
-        System.out.println(methodInvocation.getMethod().getAnnotation(NotOnWeekends.class).value());
-        Stream.of(methodInvocation.getArguments()).forEach(System.out::println);
+        String methodName = methodInvocation.getMethod().getAnnotation(CallJS.class).methodName();
+        Object[] args = methodInvocation.getArguments();
+        bridgeTestObj.invoke(methodName, args);
+        //Stream.of(methodInvocation.getArguments()).forEach(System.out::println);
         return null;
     }
 }
